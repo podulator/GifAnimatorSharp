@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GifFace {
     class Logger {
         public void log(string message) {
-            Console.WriteLine(DateTime.UtcNow + " :: GifFace :: " + message);
+            Console.WriteLine(DateTime.UtcNow + " :: GifAnimatorSharp :: " + message);
         }
     }
 }

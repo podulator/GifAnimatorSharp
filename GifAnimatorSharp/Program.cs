@@ -11,7 +11,7 @@ namespace GifFace
 
         private static Logger logger;
 		public static string showHelp() {
-			return "Run with 1 arg, the path to therecipe";
+			return "Run with 1 arg, the path to the recipe";
 		}
 
 		public static int Main (string[] args) {

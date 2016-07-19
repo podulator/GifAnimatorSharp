@@ -17,8 +17,6 @@ namespace GifFace {
 
         public MagickImage Compose(JToken frame_json) {
 
-            
-
             _logger.log("Processing new frame");
             string background_filename = (string)frame_json["background"];
             int delay = (int)frame_json["delay"];

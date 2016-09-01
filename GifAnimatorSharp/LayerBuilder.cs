@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageMagick;
 using Newtonsoft.Json.Linq;
+using log4net;
 
 namespace GifFace {
     class LayerBuilder {
-        private Logger _logger;
+        private ILog _logger;
         private List<OverlayImage> _overlay_images;
-        public LayerBuilder(Logger logger, List<OverlayImage> overlay_images) {
+        public LayerBuilder(ILog logger, List<OverlayImage> overlay_images) {
             _logger = logger;
             _overlay_images = overlay_images;
         }
@@ -20,15 +21,15 @@ namespace GifFace {
             string layer_type = (string)layer_json["type"];
             switch (layer_type) {
                 case "image":
-                    _logger.log("Adding an image");
+                    _logger.Info("Adding an image");
                     handleImage(background, layer_json, _overlay_images);
                     break;
                 case "text":
-                    _logger.log("Adding some text");
+                    _logger.Info("Adding some text");
                     handleText(background, layer_json);
                     break;
                 default:
-                    _logger.log("Unhandled layer type :: " + layer_type);
+                    _logger.Info("Unhandled layer type :: " + layer_type);
                     break;
             };
         }
@@ -72,7 +73,7 @@ namespace GifFace {
                 parameters = new IDrawable[] { the_font, pointSize, fillColor, fillOpacity, strokeAntialias, textAntialias, text, gravity };
             }
 
-            _logger.log("Adding text to image :: " + content);
+            _logger.Info("Adding text to image :: " + content);
             background_image.Draw(parameters);
 
         }// handleText
@@ -86,7 +87,7 @@ namespace GifFace {
             // optimise by seeing if we're on the canvas or not
             if (overlay_x >= 0 && overlay_x >= 0) {
                 // retrieve the real overlay image from its ref
-                _logger.log("Cloning overlay image :: " + image_ref);
+                _logger.Info("Cloning overlay image :: " + image_ref);
                 MagickImage frame_overlay_image = overlay_images.Where(x => image_ref == x.Ref).First().Image.Clone();
 
                 frame_overlay_image.BackgroundColor = MagickColors.Transparent;
@@ -94,7 +95,7 @@ namespace GifFace {
 
                 // rotate?
                 if (rotation != 0) {
-                    _logger.log(string.Format("Rotating overlay image by {0} degrees", (rotation)));
+                    _logger.Info(string.Format("Rotating overlay image by {0} degrees", (rotation)));
                     frame_overlay_image.Rotate(rotation);
                 }
                 // create a final geometry
@@ -103,7 +104,7 @@ namespace GifFace {
                 // overlay to result
                 background_image.Composite(frame_overlay_image, geometry, CompositeOperator.Over, "15");
             }
-            else _logger.log(string.Format("Overlay {0} not on screen", image_ref));
+            else _logger.Info(string.Format("Overlay {0} not on screen", image_ref));
 
         }// handleImage
 

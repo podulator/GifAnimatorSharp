@@ -5,23 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageMagick;
 using Newtonsoft.Json.Linq;
+using log4net;
 
 namespace GifFace {
     class FrameBuilder {
-        private Logger _logger;
+        private ILog _logger;
         private List<OverlayImage> _overlay_images;
-        public FrameBuilder(Logger logger, List<OverlayImage> overlay_images) {
+        public FrameBuilder(ILog logger, List<OverlayImage> overlay_images) {
             _logger = logger;
             _overlay_images = overlay_images;
         }
 
         public MagickImage Compose(JToken frame_json) {
 
-            _logger.log("Processing new frame");
+            _logger.Info("Processing new frame");
             string background_filename = (string)frame_json["background"];
             int delay = (int)frame_json["delay"];
 
-            _logger.log("Loading background image" + background_filename);
+            _logger.Info("Loading background image" + background_filename);
             MagickImage background = new MagickImage(background_filename);
             background.AnimationDelay = delay;
 

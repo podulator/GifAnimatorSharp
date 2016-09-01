@@ -31,6 +31,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
       <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.0.0104\lib\net40-client\Magick.NET-Q16-AnyCPU.dll</HintPath>
       <Private>True</Private>
@@ -45,7 +49,6 @@
     <Compile Include="FrameBuilder.cs" />
     <Compile Include="GifMaker.cs" />
     <Compile Include="LayerBuilder.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="OverlayImage.cs" />
     <Compile Include="OverlayLoader.cs" />
     <Compile Include="Program.cs" />

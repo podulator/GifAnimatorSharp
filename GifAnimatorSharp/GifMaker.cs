@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageMagick;
 using Newtonsoft.Json.Linq;
+using log4net;
 
 namespace GifFace {
-    class GifMaker {
-        private Logger _logger;
+    public class GifMaker {
+        private ILog _logger;
 
-        public GifMaker(Logger logger) {
+        public GifMaker(ILog logger) {
             _logger = logger;
         }
 
@@ -28,16 +29,16 @@ namespace GifFace {
             }// each frame
 
             if (output_images.Count > 0) {
-                _logger.log(string.Format("Optimising collection of {0} images", output_images.Count));
+                _logger.Info(string.Format("Optimising collection of {0} images", output_images.Count));
 
                 output_images.Coalesce();
                 output_images.OptimizeTransparency();
                 
-                _logger.log("Collection optimised");
+                _logger.Info("Collection optimised");
                 return output_images;
             }
             else {
-                _logger.log("No images in collection");
+                _logger.Info("No images in collection");
                 return null;
             }
 

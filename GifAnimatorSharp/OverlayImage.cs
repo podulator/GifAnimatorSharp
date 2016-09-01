@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ImageMagick;
 
 namespace GifFace {
-    class OverlayImage {
+    public class OverlayImage {
         public OverlayImage(string image_ref, string path) {
             this.Ref = image_ref;
             this.Image = new MagickImage(path);

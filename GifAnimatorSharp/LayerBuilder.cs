@@ -84,11 +84,13 @@ namespace GifFace {
             int rotation = (int)image_json["rotation"];
             string image_ref = (string)image_json["overlay_ref"];
 
+            MagickImage original_image = overlay_images.Where(x => image_ref == x.Ref).First().Image;
+
             // optimise by seeing if we're on the canvas or not
-            if (overlay_x >= 0 && overlay_x >= 0) {
+            if ((overlay_x + original_image.Width) > 0 && (overlay_y + original_image.Height) > 0) {
                 // retrieve the real overlay image from its ref
-                _logger.Info("Cloning overlay image :: " + image_ref);
-                MagickImage frame_overlay_image = overlay_images.Where(x => image_ref == x.Ref).First().Image.Clone();
+                _logger.log("Cloning overlay image :: " + image_ref);
+                MagickImage frame_overlay_image = original_image.Clone();
 
                 frame_overlay_image.BackgroundColor = MagickColors.Transparent;
                 frame_overlay_image.GifDisposeMethod = GifDisposeMethod.None;
